@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcore Studio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles to match the vibrant yellow background */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFD700; /* A vibrant gold/yellow matching the logo tone */
+            color: #000000;
+            min-height: 100vh;
+        }
+        /* Style for the interactive buttons */
+        .nav-button {
+            transition: transform 0.1s ease-in-out, background-color 0.1s ease-in-out;
+        }
+        .nav-button:hover {
+            background-color: #000000;
+            color: #FFD700;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        }
+        .nav-button:active {
+            transform: translateY(0);
+        }
+        .modal-link:hover {
+            text-decoration: underline;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center p-6">
+
+    <!-- Header / Title -->
+    <header class="text-center mb-12">
+        <h1 class="text-6xl font-extrabold tracking-tight uppercase">Webcore Studio</h1>
+    </header>
+
+    <!-- Welcome Section -->
+    <main class="text-center w-full max-w-lg bg-white p-8 rounded-xl shadow-2xl border-4 border-black">
+        <h2 class="text-5xl font-bold mb-10">Welcome</h2>
+
+        <!-- Navigation Links/Buttons -->
+        <div class="space-y-6">
+
+            <!-- Discord Link (Direct Link) -->
+            <a href="https://discord.gg/AHFpnvnVRC" target="_blank" rel="noopener noreferrer"
+               class="nav-button w-full block py-4 text-2xl font-semibold bg-[#FFD700] border-2 border-black rounded-lg">
+                Discord
+            </a>
+
+            <!-- Partners Button (Opens Modal) -->
+            <button id="partners-button"
+                    class="nav-button w-full py-4 text-2xl font-semibold bg-[#FFD700] border-2 border-black rounded-lg"
+                    onclick="openModal('Partners', partnerContent)">
+                Partners
+            </button>
+
+            <!-- Apps Button (Opens Modal) -->
+            <button id="apps-button"
+                    class="nav-button w-full py-4 text-2xl font-semibold bg-[#FFD700] border-2 border-black rounded-lg"
+                    onclick="openModal('Apps', appsContent)">
+                Apps
+            </button>
+
+        </div>
+    </main>
+
+    <!-- Modal Structure -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-black bg-opacity-75 hidden z-50 transition-opacity duration-300 items-center justify-center" onclick="closeModal()">
+        <div id="modal-container" class="bg-white text-black p-8 rounded-xl max-w-sm w-11/12 shadow-2xl border-4 border-black" onclick="event.stopPropagation()">
+            <h3 id="modal-title" class="text-3xl font-bold mb-4 border-b pb-2 border-black">Modal Title</h3>
+            <div id="modal-content" class="space-y-4 text-lg">
+                <!-- Content will be injected here -->
+            </div>
+            <button onclick="closeModal()" class="mt-6 w-full py-2 bg-black text-[#FFD700] font-semibold rounded-lg hover:bg-gray-800 transition">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript for Modal Logic -->
+    <script>
+        const backdrop = document.getElementById('modal-backdrop');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+
+        // HTML content strings for the modals
+        const partnerContent = `
+            <p>Check out our amazing partners:</p>
+            <ul class="space-y-3">
+                <li>
+                    <a href="https://discord.gg/HG2cmzkRvK" target="_blank" rel="noopener noreferrer" class="modal-link font-medium text-blue-600 hover:text-blue-800">
+                        CJ's Legion
+                    </a>
+                </li>
+                <li>
+                    <a href="https://discord.gg/6g3CyPKvDA" target="_blank" rel="noopener noreferrer" class="modal-link font-medium text-blue-600 hover:text-blue-800">
+                        The Higher Ground
+                    </a>
+                </li>
+            </ul>
+        `;
+
+        const appsContent = `
+            <p>Explore games and projects from our studio:</p>
+            <a href="https://cjslegiongames.playcode.io/index.html" target="_blank" rel="noopener noreferrer" class="modal-link block font-medium text-blue-600 hover:text-blue-800">
+                CJ's Games
+            </a>
+        `;
+
+        // Function to open the modal
+        function openModal(title, contentHtml) {
+            modalTitle.textContent = title;
+            modalContent.innerHTML = contentHtml;
+            backdrop.classList.remove('hidden');
+            backdrop.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            backdrop.classList.add('hidden');
+            backdrop.classList.remove('flex');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // Close modal when Escape key is pressed
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !backdrop.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
